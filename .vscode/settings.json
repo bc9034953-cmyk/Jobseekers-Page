@@ -1,0 +1,35 @@
+{
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.tslint": "explicit",
+    "source.fixAll.stylelint": "explicit"
+  },
+  "notebook.formatOnSave.enabled": true,
+  "editor.defaultFormatter": null,
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "vscode.css-language-features"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+  },
+  "cSpell.words": [
+    "checkmark",
+    "Ionicons",
+    "jobcompanies",
+    "Pressable",
+    "RNFS"
+  ],
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "java.compile.nullAnalysis.mode": "disabled",
+}

@@ -1,0 +1,113 @@
+import {
+  Image,
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import React from 'react';
+import style from '../../../theme/style';
+import { Colors } from '../../../theme/color';
+import { ActivityIndicator, AppBar, Spacer } from '@react-native-material/core';
+import { candidateBookmarksApiSlice } from '../../api-slices/candidate-bookmarks-api-slice';
+import SingleCandidateItem from '../../../components/SingleCandidateItem';
+
+export default function SavedCandidates() {
+  const { data, isLoading } =
+    candidateBookmarksApiSlice.useGetBookmarkedCandidatesQuery();
+
+  const renderComponent = () => {
+    if (isLoading) {
+      return (
+        <View style={styles.body}>
+          <ActivityIndicator color={Colors.primary} size={'large'} />
+        </View>
+      );
+    }
+
+    if (data?.length > 0) {
+      return (
+        <ScrollView showsVerticalScrollIndicator={false}>
+          {data?.map(item => (
+            <SingleCandidateItem
+              candidate={{
+                ...item?.candidate,
+                additional_fields: JSON.stringify(
+                  item?.candidate_additional_fields,
+                ),
+              }}
+              key={`saved-candidate-${item?.id}`}
+            />
+          ))}
+
+          <Spacer h={30} />
+        </ScrollView>
+      );
+    }
+
+    return (
+      <View style={styles.body}>
+        <Image
+          source={require('../../../../assets/image/teamwork.png')}
+          style={{
+            width: 80,
+            height: 80,
+            marginBottom: 8,
+            tintColor: Colors.tertiary,
+          }}
+        />
+
+        <Text style={[style.b18, { color: Colors.txt }]}>
+          No saved candidates found
+        </Text>
+
+        <Text style={{ fontSize: 14, color: Colors.txt, opacity: 0.8 }}>
+          Your saved candidates will show up here.
+        </Text>
+      </View>
+    );
+  };
+
+  return (
+    <SafeAreaView style={[style.area, { backgroundColor: Colors.bg }]}>
+      <StatusBar
+        translucent={false}
+        backgroundColor={Colors.bg}
+        barStyle={'dark-content'}
+      />
+
+      <View
+        style={[
+          style.main,
+          {
+            backgroundColor: Colors.bg,
+          },
+        ]}>
+        <AppBar
+          color={Colors.bg}
+          elevation={0}
+          centerTitle={true}
+          title="Saved Candidates"
+          style={{
+            borderBottomWidth: 1,
+            borderBottomColor: '#eee',
+            marginBottom: 15,
+          }}
+          titleStyle={[style.subtitle, { color: Colors.active }]}
+        />
+
+        {renderComponent()}
+      </View>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  body: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});

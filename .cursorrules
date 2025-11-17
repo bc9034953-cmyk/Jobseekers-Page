@@ -1,0 +1,17 @@
+[commit]
+maxLength = 40            # Restrict length of commit subject line
+typeScopeSeparator = ":"  # Conventional style
+requireScope = false
+requireBody = false
+allowMergeCommits = true
+
+[types]
+default = [
+  "feat",    # new feature
+  "fix",     # bug fix
+  "chore",   # build or tooling changes
+  "docs",    # documentation
+  "style",   # formatting only
+  "refactor",# code change that neither fixes a bug nor adds a feature
+  "test"     # adding or refactoring tests
+]
