@@ -67,46 +67,40 @@ export default function TextInputRow({
   // type == password then showing password field
   if (type === 'password') {
     return (
-      <Fragment>
-        <View
-          style={[
-            style.inputContainer,
-            {
-              marginTop: 20,
-              borderColor: inputBorderColor,
-            },
-          ]}>
-          <MaterialIcons
-            name="lock-outline"
-            size={22}
-            color={Colors.disable2}
-          />
-          <TextInput
-            placeholder={placeholder}
-            placeholderTextColor={Colors.disable2}
-            secureTextEntry={!isPasswordVisible}
-            selectionColor={Colors.icon}
-            onFocus={() => setIsFocused(name)}
-            value={value}
-            onBlur={() => setIsFocused(false)}
-            onChangeText={newValue => onChangeText(name, newValue)}
-            style={[style.m16, styles.input]}
-            autoCapitalize={autoCapitalize}
-          />
+  <Fragment>
+    <View
+      style={{
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 20,
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: inputBorderColor,
+        backgroundColor: '#fff',
+        height: 55,
+        paddingHorizontal: 12,
+      }}>
+      {icon}
+      <TextInput
+        {...props}
+        keyboardType={keyboardType}
+        placeholder={placeholder}
+        placeholderTextColor={Colors.disable2}
+        selectionColor={Colors.icon}
+        onFocus={() => setIsFocused(name)}
+        onBlur={() => setIsFocused(false)}
+        onChangeText={newValue => onChangeText(name, newValue)}
+        value={value}
+        style={[style.m16, styles.input]}
+        maxLength={maxLength}
+        autoCapitalize={autoCapitalize}
+      />
+    </View>
 
-          <TouchableOpacity
-            onPress={() => setIsPasswordVisible(!isPasswordVisible)}>
-            <Ionicons
-              name={!isPasswordVisible ? 'eye-off' : 'eye'}
-              color={Colors.disable}
-              size={20}
-            />
-          </TouchableOpacity>
-        </View>
+    <ErrorMessage error={getErrors()?.error} />
+  </Fragment>
+);
 
-        <ErrorMessage error={getErrors()?.error} />
-      </Fragment>
-    );
   }
 
   if (type === 'textarea') {
@@ -189,35 +183,41 @@ export default function TextInputRow({
   }
 
   return (
-    <Fragment>
-      <View
-        style={[
-          style.inputContainer,
-          {
-            marginTop: 20,
-            borderColor: inputBorderColor,
-          },
-        ]}>
-        {icon}
-        <TextInput
-          {...props}
-          keyboardType={keyboardType}
-          placeholder={placeholder}
-          placeholderTextColor={Colors.disable2}
-          selectionColor={Colors.icon}
-          onFocus={() => setIsFocused(name)}
-          value={value}
-          onBlur={() => setIsFocused(false)}
-          onChangeText={newValue => onChangeText(name, newValue)}
-          style={[style.m16, styles.input]}
-          maxLength={maxLength}
-          autoCapitalize={autoCapitalize}
-        />
-      </View>
+  <Fragment>
+    <View
+      style={{
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 20,
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: inputBorderColor,
+        backgroundColor: '#fff',
+        height: 55,
+        paddingHorizontal: 12,
+      }}>
+      {icon}
 
-      <ErrorMessage error={getErrors()?.error} />
-    </Fragment>
-  );
+      <TextInput
+        {...props}
+        keyboardType={keyboardType}
+        placeholder={placeholder}
+        placeholderTextColor={Colors.disable2}
+        selectionColor={Colors.icon}
+        onFocus={() => setIsFocused(name)}
+        onBlur={() => setIsFocused(false)}
+        onChangeText={newValue => onChangeText(name, newValue)}
+        value={value}
+        style={[style.m16, styles.input]}
+        maxLength={maxLength}
+        autoCapitalize={autoCapitalize}
+      />
+    </View>
+
+    <ErrorMessage error={getErrors()?.error} />
+  </Fragment>
+);
+
 }
 
 const styles = StyleSheet.create({

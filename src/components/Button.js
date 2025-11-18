@@ -93,7 +93,15 @@ export default function Button({
     <TouchableOpacity
       disabled={isLoading}
       onPress={onPress}
-      style={[style.btn, {...styles, opacity: isLoading ? 0.7 : 1}]}>
+      style={[style.btn,  {
+      width: 266,          // rectangle width  (Figma style)
+      height: 50,          // rectangle height
+      borderRadius: 6,     // square corners
+      alignSelf: 'center', // ALWAYS center
+      justifyContent: 'center',
+      marginTop : 20,
+      marginBottom : 20
+    },]}>
       <View
         style={{
           display: 'flex',

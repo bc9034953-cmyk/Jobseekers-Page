@@ -125,10 +125,10 @@ export default function Signup() {
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
         style={{ marginTop: 10 }}>
-        <Text style={[style.m22, { color: Colors.txt, marginTop: 10 }]}>
+        <Text style={[style.m22, { color: Colors.txt, marginTop: 10 , textAlign : 'center', fontSize : 30, fontWeight : 'bold'}]}>
           Create an Account
         </Text>
-        <Text style={[style.r16, { color: Colors.disable1 }]}>
+        <Text style={[style.r16, { color: Colors.disable1, textAlign : 'center'  }]}>
           Please fill registration form below
         </Text>
 

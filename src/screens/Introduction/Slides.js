@@ -4,14 +4,14 @@ export default [
     title: 'Find your dream job now',
     subtitle:
       'Find your dream job effortlessly. Explore tailored opportunities matching your skills and interests.',
-    bg: require('../../../assets/image/2.png'),
+    bg: require('../../../assets/image/introSlidOne.png'),
   },
   {
     id: 2,
     title: 'Everythink you need in one app',
     subtitle:
       'Easily find jobs and hire talent. Candidates access listings and craft resumes, while employers manage postings—all in one place',
-    bg: require('../../../assets/image/3.png'),
+    bg: require('../../../assets/image/introSlidTwo.png'),
   },
 
   {
@@ -19,6 +19,6 @@ export default [
     title: 'Get Selected for Your Dream Job.',
     subtitle:
       'Land your dream job with ease. Our app helps you stand out and get selected for the perfect position.',
-    bg: require('../../../assets/image/4.png'),
+    bg: require('../../../assets/image/introSlidThree.png'),
   },
 ];

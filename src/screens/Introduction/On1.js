@@ -8,10 +8,11 @@ import style from '../../theme/style';
 import Configs from '../../utils/Configs';
 import useAsyncStorage from '../../utils/useAsyncStorage';
 import ScreenLayout from '../ScreenLayout';
+import { height, width } from '../../theme';
 
 
 
-// choose your Account type screen 
+// choose your Account type screen 1
 
 export default function On1() {
   const navigation = useNavigation();
@@ -31,11 +32,11 @@ export default function On1() {
         <Text
           style={[
             style.title,
-            {color: Colors.txt, marginTop: 80, paddingRight: 50},
+            {color: Colors.txt, marginTop: 80, paddingRight: 50, textAlign : "center", fontSize : 30},
           ]}>
           Choose Your Account Type
         </Text>
-        <Text style={[style.r14, {color: Colors.disable1, marginTop: 0}]}>
+        <Text style={[style.r14, {color: Colors.disable1, marginTop: 0, textAlign : "center"}]}>
           Are you looking for a new job or looking for new employee ?
         </Text>
 
@@ -57,7 +58,7 @@ export default function On1() {
               },
             ]}>
             <Image
-              source={require('../../../assets/image/5.png')}
+              source={require('../../../assets/image/lookingForJob.png')}
               resizeMode="stretch"
               style={{height: 77, width: 77}}
             />
@@ -90,7 +91,7 @@ export default function On1() {
               },
             ]}>
             <Image
-              source={require('../../../assets/image/6.png')}
+              source={require('../../../assets/image/Recruiter.png')}
               resizeMode="stretch"
               style={{height: 77, width: 77}}
             />
@@ -106,11 +107,20 @@ export default function On1() {
         </View>
 
         {customerType && (
+          
           <Button
-            styles={{marginTop: 5}}
-            onPress={() => navigation.navigate('Login')}>
-            Next
-          </Button>
+  styles={{
+    marginTop: 5,
+    borderRadius: 6,
+    width: 266,
+    height: 55,
+    alignItems: "center",
+    alignSelf: "center"   // 🔥 THIS WILL FIX IT
+  }}
+  onPress={() => navigation.navigate('Login')}
+>
+  Next
+</Button>
         )}
 
         {/* TODO: remove later  */}

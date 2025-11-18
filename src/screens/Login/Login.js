@@ -212,13 +212,24 @@ export default function Login() {
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
         style={{ marginTop: 10 }}>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Text style={[style.m22, { color: Colors.txt, marginTop: 20 }]}>
-            Sign In
-          </Text>
+        <View style={{ width: '100%', alignItems: 'center' }}>
+           <Text
+           style={[
+              style.m22,
+               { 
+                 color: Colors.txt,
+                 marginTop: 20,
+                 fontSize: 30,
+                 fontWeight: "bold",
+                 textAlign: 'center'  // optional
+               }
+            ]}
+               >
+                    Sign In
+           </Text>
         </View>
 
-        <Text style={[style.r16, { color: Colors.disable1 }]}>
+        <Text style={[style.r16, { color: Colors.disable1 ,textAlign: 'center' }]}>
           Please sign in to your registered account
         </Text>
 
@@ -232,6 +243,8 @@ export default function Login() {
           errors={errors}
           setErrors={setErrors}
           autoCapitalize="none"
+         
+          
         />
 
         <TextInputRow
@@ -244,15 +257,26 @@ export default function Login() {
           errors={errors}
           setErrors={setErrors}
           autoCapitalize="none"
+          
         />
 
-        <Button
-          isLoading={isLoading}
-          onPress={handleLogin}
-          styles={{ marginTop: 30, marginBottom: 20 }}>
-          LOGIN
-        </Button>
-
+      <View>
+        
+      </View>
+       <View style={{ alignItems: 'center' }}>
+  <Button
+    isLoading={isLoading}
+    onPress={handleLogin}
+    styles={{
+      marginTop: 30,
+      marginBottom: 20,
+      borderRadius: 6,
+      width: 266,
+      height: 50,
+    }}>
+    LOGIN
+  </Button>
+</View>
         <View
           style={{
             flexDirection: 'row',
@@ -346,3 +370,6 @@ export default function Login() {
     </ScreenLayout>
   );
 }
+
+
+

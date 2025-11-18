@@ -70,7 +70,7 @@ export default function Splash() {
       />
 
       <ImageBackground
-        source={require('../../assets/image/1.png')}
+        source={require('../../assets/image/newSlashScreen.png')}
         resizeMode="cover"
         style={{flex: 1}}
       />

@@ -83,10 +83,10 @@ export default function Forgot() {
   return (
     <ScreenLayout>
       <ScrollView showsVerticalScrollIndicator={false} style={{marginTop: 10}}>
-        <Text style={[style.m22, {color: Colors.txt, marginTop: 10}]}>
+        <Text style={[style.m22, {color: Colors.txt, marginTop: 10, fontSize : 30, textAlign : 'center', fontWeight : 'bold'}]}>
           Forgot Password?
         </Text>
-        <Text style={[style.r16, {color: Colors.disable1}]}>
+        <Text style={[style.r16, {color: Colors.disable1 , textAlign : 'center'}]}>
           Please enter the email address or mobile number associated with your
           account
         </Text>
