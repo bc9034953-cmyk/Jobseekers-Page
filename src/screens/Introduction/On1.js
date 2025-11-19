@@ -10,8 +10,6 @@ import useAsyncStorage from '../../utils/useAsyncStorage';
 import ScreenLayout from '../ScreenLayout';
 import { height, width } from '../../theme';
 
-
-
 // choose your Account type screen 1
 
 export default function On1() {
@@ -29,17 +27,41 @@ export default function On1() {
   return (
     <ScreenLayout showAppBar={false}>
       <ScrollView showsVerticalScrollIndicator={false}>
+
+        {/* ⭐ MAIN HEADING — CENTERED */}
         <Text
           style={[
             style.title,
-            {color: Colors.txt, marginTop: 80, paddingRight: 50, textAlign : "center", fontSize : 30},
+            {
+              color: Colors.txt,
+              marginTop: 80,
+              textAlign: 'center',
+              fontSize: 30,
+              width: '100%',
+              alignSelf: 'center',
+              paddingHorizontal: 20,
+            },
           ]}>
           Choose Your Account Type
         </Text>
-        <Text style={[style.r14, {color: Colors.disable1, marginTop: 0, textAlign : "center"}]}>
+
+        {/* ⭐ SUB HEADING — CENTERED */}
+        <Text
+          style={[
+            style.r14,
+            {
+              color: Colors.disable1,
+              marginTop: 10,
+              textAlign: 'center',
+              width: '100%',
+              alignSelf: 'center',
+              paddingHorizontal: 30,
+            },
+          ]}>
           Are you looking for a new job or looking for new employee ?
         </Text>
 
+        {/* OPTION 1 */}
         <View style={{padding: 5, marginTop: 15}}>
           <TouchableOpacity
             onPress={() => onUserTypeSelect('2')}
@@ -53,8 +75,7 @@ export default function On1() {
                 alignItems: 'center',
                 borderRadius: 24,
                 borderWidth: 1,
-                borderColor:
-                  customerType === 2 ? Colors.primary : 'transparent',
+                borderColor: customerType === 2 ? Colors.primary : 'transparent',
               },
             ]}>
             <Image
@@ -73,6 +94,7 @@ export default function On1() {
           </TouchableOpacity>
         </View>
 
+        {/* OPTION 2 */}
         <View style={{padding: 5, marginTop: 15, marginBottom: 20}}>
           <TouchableOpacity
             onPress={() => onUserTypeSelect('1')}
@@ -86,8 +108,7 @@ export default function On1() {
                 alignItems: 'center',
                 borderRadius: 24,
                 borderWidth: 1,
-                borderColor:
-                  customerType === 1 ? Colors.primary : 'transparent',
+                borderColor: customerType === 1 ? Colors.primary : 'transparent',
               },
             ]}>
             <Image
@@ -100,40 +121,28 @@ export default function On1() {
                 I WANT TO HIRE
               </Text>
               <Text style={[style.r14, {color: Colors.txt, marginTop: 3}]}>
-                Let’s recruit your great candidate faster here{' '}
+                Let’s recruit your great candidate faster here
               </Text>
             </View>
           </TouchableOpacity>
         </View>
 
+        {/* NEXT BUTTON */}
         {customerType && (
-          
           <Button
-  styles={{
-    marginTop: 5,
-    borderRadius: 6,
-    width: 266,
-    height: 55,
-    alignItems: "center",
-    alignSelf: "center"   // 🔥 THIS WILL FIX IT
-  }}
-  onPress={() => navigation.navigate('Login')}
->
-  Next
-</Button>
+            styles={{
+              marginTop: 5,
+              borderRadius: 6,
+              width: 266,
+              height: 55,
+              alignItems: 'center',
+              alignSelf: 'center', // ⭐ Perfect center
+            }}
+            onPress={() => navigation.navigate('Login')}>
+            Next
+          </Button>
         )}
 
-        {/* TODO: remove later  */}
-        {/* <Button
-          onPress={() => {
-            AsyncStorage.removeItem(Configs.USER_TYPE_STORAGE_KEY);
-            AsyncStorage.removeItem('has_introduction_completed');
-
-            fetchData();
-          }}
-          styles={{marginTop: 50}}>
-          Remove
-        </Button> */}
       </ScrollView>
     </ScreenLayout>
   );

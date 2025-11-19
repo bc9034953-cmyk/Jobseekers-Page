@@ -175,6 +175,7 @@ export default function Signup() {
           setFormData={setFormData}
           value={formData?.password}
           name="password"
+          icon={<FeatherIcon name="lock" size={20} color={Colors.disable2} />}
           type="password"
           placeholder="Password"
           errors={errors}
@@ -185,6 +186,7 @@ export default function Signup() {
           formData={formData}
           setFormData={setFormData}
           type="password"
+          icon={<FeatherIcon name="lock" size={20} color={Colors.disable2} />}
           value={formData?.confirm_password}
           name="confirm_password"
           placeholder="Confirm Password"

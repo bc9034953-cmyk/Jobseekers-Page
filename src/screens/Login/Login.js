@@ -256,11 +256,9 @@ export default function Login() {
           type="password"
           errors={errors}
           setErrors={setErrors}
+          icon={<FeatherIcon name="lock" size={20} color={Colors.disable2} />}
           autoCapitalize="none"
           showEyeIcon={true}
-
-
-          
         />
 
       <View>
