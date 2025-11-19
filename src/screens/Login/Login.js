@@ -257,6 +257,9 @@ export default function Login() {
           errors={errors}
           setErrors={setErrors}
           autoCapitalize="none"
+          showEyeIcon={true}
+
+
           
         />
 

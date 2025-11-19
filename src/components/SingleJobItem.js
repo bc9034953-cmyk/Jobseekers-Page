@@ -37,17 +37,34 @@ export default function SingleJobItem({
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate('JobDetail', {job})}
-      style={{
-        flexDirection: 'row',
-        marginTop: 15,
-        paddingBottom: 20,
-        marginBottom: 5,
-        borderBottomWidth: 1,
-        borderBottomColor: '#eee',
-      }}>
+       style={{
+    flexDirection: 'row',
+    marginTop: 15,
+    backgroundColor: '#fff',
+
+    // 🌟 CARD LOOK
+    padding: 14,
+    
+
+    // 🌟 BORDER
+    borderWidth: 1,
+    borderColor: '#e5e7eb',
+
+    // 🌟 SHADOW
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOpacity: 0.06,
+  
+    shadowOffset: { width: 0, height: 2 },
+
+    // 🌟 GAP BETWEEN CARDS
+    marginHorizontal: 5,
+  }}
+      
+      >
       <Image
         source={getCompanyLogo(job?.company?.logo)}
-        resizeMode="stretch"
+        resizeMode="stretch" 
         style={{height: 55, width: 55, borderRadius: 8}}
       />
       <View style={{marginLeft: 10, flex: 1}}>

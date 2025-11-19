@@ -1,9 +1,10 @@
 import { AppBar, Avatar, Badge, HStack } from '@react-native-material/core';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
-import React, { useEffect } from 'react';
+import React, { useEffect ,  useRef  } from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
+  Image,
   Pressable,
   SafeAreaView,
   ScrollView,
@@ -38,6 +39,10 @@ import { width } from '../../theme';
 import RecentlyViewedCandidates from './RecentlyViewedCandidates';
 import HomeManageJobs from './HomeManageJobs';
 import WalletButton from './WalletButton';
+import NotificationIcon from "../../../assets/image/notificationIcon.png";
+import Footer from "../../components/Footer";
+
+
 
 export default function Home() {
   const navigation = useNavigation();
@@ -92,7 +97,7 @@ export default function Home() {
     ? {
         uri: `${Configs.DATA_URL}/customers/120x120-${customerAdditional?.profile_picture}`,
       }
-    : require('../../../assets/image/user.png');
+    : require('../../../assets/image/profileIconNew.png');
 
   const navigateProfile = () => {
     let path = 'Profile';
@@ -134,6 +139,9 @@ export default function Home() {
     return 'Search jobs';
   };
 
+  const scrollRef = useRef(null);
+
+
   return (
     <SafeAreaView style={[style.area, { backgroundColor: Colors.bg }]}>
       <StatusBar
@@ -146,7 +154,7 @@ export default function Home() {
         behavior={Platform.OS === 'ios' ? 'padding' : null}>
         <View
           style={[style.main, { backgroundColor: Colors.bg, marginTop: 10 }]}>
-          <AppBar
+          {/* <AppBar
             color={Colors.bg}
             elevation={0}
             leading={
@@ -196,12 +204,73 @@ export default function Home() {
                 )}
               </HStack>
             }
-          />
+          /> */}
+
+          {/* 🔥 NEW COMPACT HEADER */}
+<View style={styles.topHeader}>
+
+  {/* 1️⃣ TOP ROW — LOGO + ICONS */}
+  <View style={styles.topRow}>
+    
+    {/* LOGO */}
+    <Image
+      source={require('../../../assets/image/Jobseekerslogo.png')}
+      style={[styles.logo, ] }
+    />
+
+    {/* ICONS RIGHT SIDE */}
+    <View style={styles.rightIcons}>
+      {/* <TouchableOpacity onPress={navigateNotification} style={styles.iconWrapper}>
+        <Icon name="notifications" size={20} color={Colors.active} />
+
+        {unreadNotificationsCount > 0 && (
+          <View style={styles.badge}>
+            <Text style={{ color: "#fff", fontSize: 10 }}>
+              {unreadNotificationsCount}
+            </Text>
+          </View>
+        )}
+      </TouchableOpacity> */}
+
+      <TouchableOpacity onPress={navigateNotification} style={styles.iconWrapper}>
+  <Image
+    source={NotificationIcon}
+    style={{ width: 30, height: 30, resizeMode: "contain" }}
+  />
+
+  {unreadNotificationsCount > 0 && (
+    <View style={styles.badge}>
+      <Text style={{ color: "#fff", fontSize: 10 }}>
+        {unreadNotificationsCount}
+      </Text>
+    </View>
+  )}
+</TouchableOpacity>
+
+      <TouchableOpacity onPress={navigateProfile} style={styles.profileCircle}>
+        <Image
+          source={profilePicture}
+          style={{ width: 35, height: 35, borderRadius: 18 }}
+        />
+      </TouchableOpacity>
+    </View>
+
+  </View>
+
+  {/* 2️⃣ GREETING + NAME IN ONE LINE */}
+  <Text style={styles.greetLine}>
+    {getTimeBasedGreeting()}, <Text style={styles.nameText}>{customer?.name || "Guest"}</Text>
+  </Text>
+
+</View>
+
+
+          
 
           <Pressable
             onPress={searchNavigate}
             unstable_pressDelay={0}
-            style={[style.shadow, style.inputContainer, styles.inputContainer]}>
+            style={[style.inputContainer, styles.inputContainer ]}>
             <Icon name="search" size={24} color={Colors.active} />
             <TextInput
               placeholder={searchPlaceholder()}
@@ -219,19 +288,25 @@ export default function Home() {
           ) : (
             <>
               <ScrollView
+                ref={scrollRef}
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ paddingBottom: 80 }}>
                 <Banners isUserEmployer={isUserEmployer(userData)} />
 
                 {/* For Candidate */}
                 <RecentlyViewedJobs isUserEmployer={isUserEmployer(userData)} />
-                <NewRandomJobs isUserEmployer={isUserEmployer(userData)} />
-
+                
+                <NewRandomJobs 
+                    isUserEmployer={isUserEmployer(userData)} 
+                    scrollRef={scrollRef}
+                   />
                 {/* For Employer */}
                 <RecentlyViewedCandidates
                   isUserEmployer={isUserEmployer(userData)}
                 />
                 <HomeManageJobs isUserEmployer={isUserEmployer(userData)} />
+                  {/* ⭐ FOOTER ALWAYS AT END */}
+                   <Footer />
               </ScrollView>
 
               {isUserEmployer(userData) && !companyLoading && (
@@ -286,7 +361,126 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     backgroundColor: Colors.bg,
     shadowColor: Colors.active,
-    marginTop: 10,
+    marginTop: 5,
     marginBottom: 5,
   },
+  topHeader: {
+
+  paddingHorizontal: 20,
+  paddingTop: 15,
+  paddingBottom: 20,
+  borderBottomLeftRadius: 25,
+  borderBottomRightRadius: 25,
+},
+
+topRow: {
+  flexDirection: "row",
+  justifyContent: "space-between",
+  alignItems: "center",
+},
+
+logo: {
+  width: 140,
+  height: 40,
+  resizeMode: "contain",
+},
+
+rightIcons: {
+  flexDirection: "row",
+  alignItems: "center",
+  gap: 12,
+},
+
+iconWrapper: {
+  width: 36,
+  height: 36,
+  borderRadius: 18,
+  backgroundColor: "#fff",
+  justifyContent: "center",
+  alignItems: "center",
+},
+
+badge: {
+  position: "absolute",
+  right: -3,
+  top: -3,
+  backgroundColor: "red",
+  paddingHorizontal: 5,
+  paddingVertical: 2,
+  borderRadius: 10,
+},
+
+profileCircle: {
+  width: 36,
+  height: 36,
+  borderRadius: 18,
+  backgroundColor: "#d4cbcbff",
+  justifyContent: "center",
+  alignItems: "center",
+},
+
+greetLine: {
+  marginTop: 1,
+  fontSize: 18,
+  color: "#554478",
+  fontWeight: "600",
+},
+
+nameText: {
+  color: Colors.txt,
+  fontWeight: "bold",
+  fontSize: 18,
+},
+
 });
+
+// const RoleGrid = () => {
+//   const items = [
+//     { title: "Recent Jobs", color: "#E8F5E9" },       // light green
+//     { title: "Full Time", color: "#EDE7F6" },         // lavender
+//     { title: "Part Time", color: "#FFFDE7" },         // soft yellow
+//     { title: "Freelancer", color: "#E3F2FD" },        // light blue
+//   ];
+
+//   return (
+//     <View style={{ marginTop: 20, paddingHorizontal: 10 }}>
+//       <Text
+//         style={{
+//           fontSize: 20,
+//           fontWeight: "700",
+//           color: "#3b2b52",
+//           marginBottom: 15,
+//         }}
+//       >
+//         Find Your Perfect Role
+//       </Text>
+
+//       <View style={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between" }}>
+//         {items.map((item, index) => (
+//           <View
+//             key={index}
+//             style={{
+//               width: "48%",
+//               height: 110,
+//               borderRadius: 18,
+//               backgroundColor: item.color,
+//               marginBottom: 12,
+//               justifyContent: "center",
+//               alignItems: "center",
+//               shadowColor: "#000",
+//               shadowOpacity: 0.05,
+//               shadowRadius: 6,
+//               shadowOffset: { width: 0, height: 3 },
+//               elevation: 2,
+//             }}
+//           >
+//             <Text style={{ fontSize: 18, fontWeight: "700", color: "#333" }}>
+//               {item.title}
+//             </Text>
+//           </View>
+//         ))}
+//       </View>
+//     </View>
+//   );
+// };
+
