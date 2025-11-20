@@ -35,33 +35,10 @@ export default function SingleJobItem({
   const userData = useSelector(state => state.users.data);
 
   return (
-    <TouchableOpacity
-      onPress={() => navigation.navigate('JobDetail', {job})}
-       style={{
-    flexDirection: 'row',
-    marginTop: 15,
-    backgroundColor: '#fff',
-
-    // 🌟 CARD LOOK
-    padding: 14,
-    
-
-    // 🌟 BORDER
-    borderWidth: 1,
-    borderColor: '#e5e7eb',
-
-    // 🌟 SHADOW
-    elevation: 5,
-    shadowColor: '#000',
-    shadowOpacity: 0.06,
-  
-    shadowOffset: { width: 0, height: 2 },
-
-    // 🌟 GAP BETWEEN CARDS
-    marginHorizontal: 5,
-  }}
-      
-      >
+   <TouchableOpacity
+  onPress={() => navigation.navigate('JobDetail', {job})}
+  style={styles.tab}
+>
       <Image
         source={getCompanyLogo(job?.company?.logo)}
         resizeMode="stretch" 
@@ -243,4 +220,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     transform: [{scale: 0.95}],
   },
+  tab : {
+    
+    flexDirection: 'row',
+    marginTop: 15,
+    backgroundColor: '#fff',
+    padding: 14,
+    borderWidth: 1,
+    borderColor: '#e5e7eb',
+    borderRadius: 6,
+    marginHorizontal: 5,
+
+    // ⭐ ONLY BOTTOM SHADOW
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },  // bottom only
+    shadowOpacity: 0.12,
+    shadowRadius: 4,
+    elevation: 2, // Android bottom shadow only       
+  }
 });

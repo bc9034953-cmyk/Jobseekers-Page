@@ -1,36 +1,104 @@
-import { View, Text, Image, StyleSheet, Dimensions } from "react-native";
 import React from "react";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+  Share,
+  Linking,
+  Alert,
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
+
 import FooterImg from "../../assets/image/FooterImg.png";
+import Footer2 from "../../assets/image/Footer2.png";
+import ContactUs from "../screens/ContactUs"; // ✅ yahin import hota hai
 
 const { width } = Dimensions.get("window");
 
 export default function Footer() {
+
+  const navigation = useNavigation();
+
+  // ✅ Share function
+  const handleShare = async () => {
+    try {
+      await Share.share({
+        title: "JobSeekers Page",
+        message: "Check out JobSeekers Page: https://jobseekerspage.com",
+        url: "https://jobseekerspage.com",
+      });
+    } catch (error) {
+      console.log("Share Error:", error);
+    }
+  };
+
+  // ✅ Open social links
+  const openLink = async (url) => {
+    const supported = await Linking.canOpenURL(url);
+
+    if (supported) {
+      await Linking.openURL(url);
+    } else {
+      Alert.alert("Error", "Could not open link");
+    }
+  };
+
   return (
     <View style={styles.footerContainer}>
 
-      {/* Divider Line */}
+      {/* ✅ Main Logo - SHARE */}
+      <TouchableOpacity onPress={handleShare} activeOpacity={0.8}>
+        <View style={styles.logoWrapper}>
+          <Image source={FooterImg} style={styles.logoImage} />
+        </View>
+      </TouchableOpacity>
+
+      {/* ✅ Secondary Logo - CONTACT US PAGE */}
+      <TouchableOpacity
+        onPress={() => navigation.navigate("ContactUs")}
+        activeOpacity={0.8}
+      >
+        <View style={styles.logoWrapper}>
+          <Image source={Footer2} style={styles.logoImage} />
+        </View>
+      </TouchableOpacity>
+
+      {/* Divider line */}
       <View style={styles.line} />
 
-      {/* Social Icons Row */}
+      {/* ✅ Social Icons */}
       <View style={styles.socialRow}>
-        <View style={styles.iconCircle}>
+
+        <TouchableOpacity 
+          onPress={() => openLink("https://www.facebook.com/jobseekerspagedotcom")}
+          style={styles.iconCircle}
+        >
           <Image source={require("../../assets/image/facebook.png")} style={styles.socialIcon} />
-        </View>
+        </TouchableOpacity>
 
-        <View style={styles.iconCircle}>
+        <TouchableOpacity 
+          onPress={() => openLink("https://www.instagram.com/jobseekerspagedotcom/")}
+          style={styles.iconCircle}
+        >
           <Image source={require("../../assets/image/instagram.png")} style={styles.socialIcon} />
-        </View>
+        </TouchableOpacity>
 
-        <View style={styles.iconCircle}>
+        <TouchableOpacity 
+          onPress={() => openLink("https://www.linkedin.com/company/jobseekerspage-com/posts/?feedView=all")}
+          style={styles.iconCircle}
+        >
           <Image source={require("../../assets/image/linkedin.png")} style={styles.socialIcon} />
-        </View>
+        </TouchableOpacity>
+
       </View>
 
-      {/* Logo */}
-      <Image source={FooterImg} style={styles.footerLogo} />
+      <Text style={styles.copyText}>
+        © 2024 JobSeekers Page. All Rights Reserved
+      </Text>
 
-      {/* Copyright */}
-      <Text style={styles.copyText}>© 2024 JobSeekers • All Rights Reserved</Text>
     </View>
   );
 }
@@ -39,54 +107,58 @@ const styles = StyleSheet.create({
   footerContainer: {
     width: "100%",
     alignItems: "center",
-    paddingTop: width * 0.04,
-    paddingBottom: width * 0.06,
-    marginTop: width * 0.04,
+    paddingVertical: 15,
+    backgroundColor: "#f9fafb",
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+  },
+
+  logoWrapper: {
+    width: width * 0.8,
+    height: 80,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 10,
+  },
+
+  logoImage: {
+    width: "100%",
+    height: "100%",
+    resizeMode: "contain",
   },
 
   line: {
-    width: "90%",
+    width: "85%",
     height: 1,
     backgroundColor: "#e5e7eb",
-    marginBottom: width * 0.04,
+    marginVertical: 10,
   },
 
   socialRow: {
     flexDirection: "row",
-    marginBottom: width * 0.05,
+    marginVertical: 10,
   },
 
   iconCircle: {
-    width: width * 0.12,
-    height: width * 0.12,
-    borderRadius: width * 0.12,
-    backgroundColor: "#f9fafb",
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: "#fff",
     justifyContent: "center",
     alignItems: "center",
-    marginHorizontal: width * 0.03,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 4,
+    marginHorizontal: 15,
+    elevation: 5,
   },
 
   socialIcon: {
-    width: "60%",
-    height: undefined,
-    aspectRatio: 1,
+    width: 26,
+    height: 26,
     resizeMode: "contain",
-  },
-
-  footerLogo: {
-    width: "70%",
-    height: undefined,
-    aspectRatio: 4,
-    resizeMode: "contain",
-    marginBottom: width * 0.03,
   },
 
   copyText: {
-    color: "#9ca3af",
-    fontSize: width * 0.03,
+    color: "#6b7280",
+    fontSize: 12,
+    marginTop: 8,
   },
 });

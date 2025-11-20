@@ -74,7 +74,6 @@ export default function IntroItem({ item }) {
           style={{
             width: width / 1.5,
             height: height / 3,
-            resizeMode: 'stretch',
             alignSelf: 'center',
           }}
         />

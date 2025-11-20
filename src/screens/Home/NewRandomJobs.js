@@ -13,7 +13,7 @@ import style from "../../theme/style";
 import { jobsApiSlice } from "../api-slices/jobs-api-slice";
 import { ActivityIndicator } from "@react-native-material/core";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
-import { getJobsByType, titleCase } from "../../utils";
+import { getJobsByType } from "../../utils";
 
 export default function NewRandomJobs({ isUserEmployer, scrollRef }) {
   const { data, isLoading, refetch, isUninitialized } =
@@ -26,17 +26,20 @@ export default function NewRandomJobs({ isUserEmployer, scrollRef }) {
 
   const scrollAnim = useRef(new Animated.Value(0)).current;
 
+  // ⭐ Category-wise counting
+  const recentCount = getJobsByType(data, "recent jobs")?.length || 0;
+  const fullTimeCount = getJobsByType(data, "full time")?.length || 0;
+  const partTimeCount = getJobsByType(data, "part time")?.length || 0;
+  const freelancerCount = getJobsByType(data, "freelancer")?.length || 0;
+
   let jobs = getJobsByType(data, activeTab);
 
-  // --------------------------
-  // ⭐ SCROLL on TAB PRESS
-  // --------------------------
   const handleTabPress = (type) => {
     setActiveTab(type);
 
     setTimeout(() => {
       scrollRef?.current?.scrollTo({
-        y: 550,          // ⭐ Yaha se scroll hoga
+        y: 550,
         animated: true,
       });
     }, 150);
@@ -66,6 +69,7 @@ export default function NewRandomJobs({ isUserEmployer, scrollRef }) {
 
   return (
     <Animated.View style={{ paddingTop: scrollAnim }}>
+      
       {/* HEADER */}
       <View style={styles.headerRow}>
         <Text style={[style.s18, { color: Colors.txt, flex: 1 }]}>
@@ -80,80 +84,84 @@ export default function NewRandomJobs({ isUserEmployer, scrollRef }) {
       <View style={{ marginTop: 15 }}>
         <View style={styles.gridContainer}>
 
-          {/* CARD 1 */}
+          {/* CARD 1 — Recent Jobs */}
           <TouchableOpacity
             activeOpacity={0.8}
             onPress={() => handleTabPress("recent jobs")}
             style={[
               styles.card,
-              { backgroundColor: "#DFF8E1" },
+              { backgroundColor: "#b9faddff" },
               activeTab === "recent jobs" && styles.activeCard,
             ]}
           >
             <View style={styles.leftCol}>
               <Text style={styles.title}>Recent Jobs</Text>
-              <Text style={styles.sub}>Latest openings</Text>
+              <Text style={styles.count}>{recentCount} jobs</Text>
             </View>
+
             <Image
               source={require("../../../assets/image/RecentJob.png")}
-              style={styles.cardImage}
+              style={[styles.cardImage, { width: 80, height: 80 }]}
             />
           </TouchableOpacity>
 
-          {/* CARD 2 */}
+          {/* CARD 2 — Full Time */}
           <TouchableOpacity
             activeOpacity={0.8}
             onPress={() => handleTabPress("full time")}
             style={[
               styles.card,
-              { backgroundColor: "#EEE7FF" },
+              { backgroundColor: "#f8d69eff" },
               activeTab === "full time" && styles.activeCard,
             ]}
           >
             <View style={styles.leftCol}>
               <Text style={styles.title}>Full Time</Text>
-              <Text style={styles.sub}>Career roles</Text>
+              <Text style={styles.count}>{fullTimeCount} jobs</Text>
             </View>
+
             <Image
               source={require("../../../assets/image/FulltimeJob.png")}
               style={styles.cardImage}
             />
           </TouchableOpacity>
 
-          {/* CARD 3 */}
+          {/* CARD 3 — Part Time */}
           <TouchableOpacity
             activeOpacity={0.8}
             onPress={() => handleTabPress("part time")}
             style={[
               styles.card,
-              { backgroundColor: "#FFF7C9" },
+              { backgroundColor: "#8bb7f8ff" },
               activeTab === "part time" && styles.activeCard,
             ]}
           >
             <View style={styles.leftCol}>
               <Text style={styles.title}>Part Time</Text>
-              <Text style={styles.sub}>Flexible shifts</Text>
+              <Text style={styles.count}>{partTimeCount} jobs</Text>
             </View>
+
             <Image
               source={require("../../../assets/image/PartTimeJob.png")}
               style={styles.cardImage}
             />
           </TouchableOpacity>
 
-          {/* CARD 4 */}
+          {/* CARD 4 — Freelancer */}
           <TouchableOpacity
             activeOpacity={0.8}
             onPress={() => handleTabPress("freelancer")}
             style={[
               styles.card,
-              { backgroundColor: "#E8F3FF" },
+              { backgroundColor: "#efd3fcff" },
               activeTab === "freelancer" && styles.activeCard,
             ]}
           >
             <View style={styles.leftCol}>
               <Text style={styles.title}>Freelancer</Text>
-              <Text style={styles.sub}>Work anywhere</Text>
+              <Text style={styles.count}>{freelancerCount} jobs</Text>
             </View>
+
             <Image
               source={require("../../../assets/image/Freelancer.png")}
               style={styles.cardImage}
@@ -172,42 +180,29 @@ export default function NewRandomJobs({ isUserEmployer, scrollRef }) {
         />
       )}
 
-      {/* JOB LIST  first change */}
+      {/* JOB LIST */}
       {jobs?.slice(0, 20).map((job) => (
-         <SingleJobItem job={job} key={`recent-job-${job?.id}`} />
-          ))}
+        <SingleJobItem job={job} key={`recent-job-${job?.id}`} />
+      ))}
 
-          {/* second step  */}
-        <View style={{ marginTop: 20, marginBottom: 10, alignItems: "center" }}>
-          <TouchableOpacity
+      {/* VIEW ALL */}
+      <View style={{ marginTop: 20, marginBottom: 10, alignItems: "center" }}>
+        <TouchableOpacity
           onPress={() => navigation.navigate("JobListing")}
-           style={{
-      backgroundColor: Colors.primary,
-      paddingVertical: 12,
-      paddingHorizontal: 28,
-      borderRadius: 30,
-      elevation: 3,
-    }}
-  >
-    <Text style={{ color: "#fff", fontSize: 15, fontWeight: "600" }}>
-      View All Jobs →
-    </Text>
-  </TouchableOpacity>
-</View>
-
-
-      {/* EMPTY */}
-      {jobs?.length === 0 && (
-        <View style={styles.emptyBox}>
-          <Image
-            source={require("../../../assets/image/job.png")}
-            style={{ width: 55, height: 55, marginBottom: 10 }}
-          />
-          <Text style={[style.m15, { color: Colors.txt }]}>
-            Sorry, no jobs found
+          style={{
+            backgroundColor: Colors.primary,
+            paddingVertical: 12,
+            paddingHorizontal: 28,
+            borderRadius: 30,
+            elevation: 3,
+          }}
+        >
+          <Text style={{ color: "#fff", fontSize: 15, fontWeight: "600" }}>
+            View All Jobs →
           </Text>
-        </View>
-      )}
+        </TouchableOpacity>
+      </View>
+
     </Animated.View>
   );
 }
@@ -227,53 +222,45 @@ const styles = StyleSheet.create({
 
   card: {
     width: "48%",
-    height: 120,
-    borderRadius: 18,
-    padding: 12,
-    marginBottom: 12,
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOpacity: 0.04,
-    shadowRadius: 4,
+    height: 80,
+    borderRadius: 10,
+    padding: 14,
+    marginBottom: 14,
+    position: "relative",
+    overflow: "hidden",
   },
 
   activeCard: {
     shadowColor: Colors.primary,
     shadowOpacity: 0.3,
     shadowRadius: 5,
-    elevation: 6,
-    transform: [{ scale: 1.02 }],
+    elevation: 5,
+    transform: [{ scale: 1.03 }],
   },
 
   leftCol: {
-    width: "55%",
+    width: "70%",
   },
 
   title: {
-    fontSize: 15,
+    fontSize: 13,
     fontWeight: "700",
-    color: "#333",
+    color: "#222",
   },
 
-  sub: {
-    fontSize: 12,
-    color: "#555",
+  count: {
+    fontSize: 10,
+    color: "#000",
     marginTop: 3,
+    fontWeight: "700",
   },
 
   cardImage: {
-     width: "38%",        // image card ka 38% part use karegi
-     height: undefined,
-     aspectRatio: 1,      // square image
-     resizeMode: "contain",
-  },
-
-  emptyBox: {
-    marginTop: 50,
-    justifyContent: "center",
-    alignItems: "center",
-    paddingBottom: 40,
+    width: 85,
+    height: 85,
+    resizeMode: "contain",
+    position: "absolute",
+    bottom: -10,
+    right: -10,
   },
 });
